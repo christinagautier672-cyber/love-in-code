@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Love OS v3.0 ❤️</title>
+<title>LOVE OS: FINAL BOSS ❤️</title>
 
 <style>
 body {
@@ -12,22 +12,41 @@ body {
   background:#050816;
   color:white;
   overflow-x:hidden;
+  animation: heartbeat 6s infinite;
 }
 
-/* GLITCH */
+/* HEARTBEAT */
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.01); }
+  100% { transform: scale(1); }
+}
+
+/* GLITCH INTRO */
+#intro {
+  position:fixed;
+  inset:0;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  font-family:monospace;
+  z-index:9999;
+}
 .glitch {
-  animation: glitch 0.4s infinite;
+  animation: glitch 0.3s infinite;
 }
 @keyframes glitch {
-  0% { transform: translate(0); }
-  25% { transform: translate(-2px,2px); }
-  50% { transform: translate(2px,-2px); }
-  75% { transform: translate(-1px,1px); }
-  100% { transform: translate(0); }
+  0%{transform:translate(0);}
+  25%{transform:translate(-2px,2px);}
+  50%{transform:translate(2px,-2px);}
+  75%{transform:translate(-1px,1px);}
+  100%{transform:translate(0);}
 }
 
 /* BACKGROUND */
-body::before {
+body::before{
   content:"";
   position:fixed;
   inset:0;
@@ -37,7 +56,7 @@ body::before {
   z-index:-1;
 }
 
-/* CONTAINER */
+/* LAYOUT */
 .container {
   width:min(1000px,90%);
   margin:auto;
@@ -54,25 +73,16 @@ body::before {
   transition:0.3s;
   cursor:pointer;
 }
-.card:hover {
+.card:hover{
   transform:scale(1.02);
   box-shadow:0 0 20px rgba(236,72,153,0.3);
-}
-
-/* BUTTON */
-button {
-  background:linear-gradient(90deg,#f472b6,#22d3ee);
-  border:none;
-  padding:10px 15px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:bold;
 }
 
 /* POPUP */
 .popup {
   position:fixed;
-  top:50%; left:50%;
+  top:50%;
+  left:50%;
   transform:translate(-50%,-50%);
   background:#0f172a;
   border:2px solid #f472b6;
@@ -86,132 +96,104 @@ button {
 .heart {
   position:fixed;
   color:pink;
-  animation: float 6s linear forwards;
+  animation:float 6s linear forwards;
 }
 @keyframes float {
-  from { transform:translateY(100vh); opacity:1; }
-  to { transform:translateY(-10vh); opacity:0; }
+  from{transform:translateY(100vh);opacity:1;}
+  to{transform:translateY(-10vh);opacity:0;}
 }
 
-/* SCREEN SHAKE */
-.shake {
-  animation: shake 0.3s;
-}
-@keyframes shake {
-  0%{transform:translate(0);}
-  25%{transform:translate(-5px,5px);}
-  50%{transform:translate(5px,-5px);}
-  75%{transform:translate(-5px,5px);}
-  100%{transform:translate(0);}
+/* SECRET ZONES */
+.secret-zone {
+  position:absolute;
+  opacity:0;
+  width:80px;
+  height:80px;
 }
 
-/* LOCK SCREEN */
-#lock {
-  position:fixed;
-  inset:0;
-  background:black;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-  font-family:monospace;
+/* GALLERY */
+.gallery img {
+  width:100%;
+  border-radius:15px;
+  margin:10px 0;
+  cursor:pointer;
+  transition:0.3s;
+}
+.gallery img:hover {
+  transform:scale(1.03);
 }
 
+button{
+  background:linear-gradient(90deg,#f472b6,#22d3ee);
+  border:none;
+  padding:10px 15px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
 </style>
 </head>
 
 <body>
 
-<!-- MUSIC -->
-<audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8f5b8a7.mp3" type="audio/mp3">
-</audio>
-
-<!-- LOCK -->
-<div id="lock">
-  <h2 class="glitch">LOVE SYSTEM LOCKED</h2>
-  <p>Hint: our forever word ❤️</p>
-  <input id="pass" placeholder="password"/>
-  <br><br>
-  <button onclick="unlock()">ENTER</button>
+<!-- INTRO -->
+<div id="intro">
+  <div class="glitch">BOOTING LOVE OS...</div>
+  <p>decrypting emotions...</p>
+  <p>loading memories...</p>
 </div>
+
+<!-- SECRET ADMIN MODE -->
+<input id="admin" style="opacity:0;position:fixed;top:0;" />
 
 <!-- MAIN -->
 <div id="site" style="display:none">
 
 <div class="container">
 
-<h1>To My Favorite Human ❤️</h1>
+<h1>LOVE OS: FINAL BOSS ❤️</h1>
 
-<div class="card" onclick="popup('You are my home.')">
-💌 Click me
+<p>Find the secrets. Click everything. Some things are hidden.</p>
+
+<!-- SECRET ZONES -->
+<div class="secret-zone" onclick="adminMode()" style="top:20%;left:10%"></div>
+<div class="secret-zone" onclick="easterEgg()" style="top:60%;left:70%"></div>
+
+<div class="card" onclick="popup('You are my forever system.')">
+💌 Memory Fragment 1
 </div>
 
-<div class="card" onclick="popup('I would choose you every timeline.')">
-💖 Another secret
+<div class="card" onclick="popup('We were always meant to crash into each other.')">
+💖 Memory Fragment 2
 </div>
 
-<div class="card">
-<h2>🎉 Anniversary Countdown (Dating - 15th)</h2>
-<p id="count1"></p>
+<div class="card" onclick="quest()">
+🧩 Love Quest (click to begin)
+<p id="quest"></p>
 </div>
 
-<div class="card">
-<h2>💍 Wedding Anniversary Countdown (April)</h2>
-<p id="count2"></p>
-</div>
-
-<div class="card">
-<h2>💻 Fake Hack</h2>
-<button onclick="hack()">Run love.exe</button>
-<p id="hack"></p>
-</div>
-
-<div class="card">
-<h2>🎮 Choose Path</h2>
-<button onclick="path('travel')">Travel</button>
-<button onclick="path('home')">Home</button>
-<button onclick="path('future')">Future</button>
-<p id="path"></p>
+<div class="card gallery">
+<h2>📸 Memories</h2>
+<img onclick="popup('Our happiest moment ❤️')" src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70"/>
+<img onclick="popup('Forever starts here 💍')" src="https://images.unsplash.com/photo-1523438097201-512ae7d59c2a"/>
 </div>
 
 </div>
-
 </div>
 
 <!-- POPUP -->
 <div class="popup" id="popup">
 <p id="text"></p>
-<button onclick="closePopup()">Close</button>
+<button onclick="closePopup()">close</button>
 </div>
 
 <script>
 
-/* UNLOCK */
-function unlock(){
-  const val=document.getElementById("pass").value.toLowerCase();
-
-  if(val==="forever" || val==="love"){
-    document.getElementById("lock").style.display="none";
-    document.getElementById("site").style.display="block";
-    document.getElementById("music").play();
-    startCountdowns();
-  } else {
-    document.body.classList.add("shake");
-    setTimeout(()=>document.body.classList.remove("shake"),300);
-    alert("wrong password ❤️ hint: forever word");
-  }
-}
-
-/* POPUP */
-function popup(t){
-  document.getElementById("text").innerText=t;
-  document.getElementById("popup").style.display="block";
-}
-function closePopup(){
-  document.getElementById("popup").style.display="none";
-}
+/* INTRO */
+setTimeout(()=>{
+  document.getElementById("intro").style.display="none";
+  document.getElementById("site").style.display="block";
+},2500);
 
 /* HEARTS */
 document.addEventListener("click",(e)=>{
@@ -224,67 +206,43 @@ document.addEventListener("click",(e)=>{
   setTimeout(()=>h.remove(),6000);
 });
 
-/* FAKE HACK */
-function hack(){
-  const lines=[
-    "scanning heart...",
-    "bypassing logic...",
-    "injecting love...",
-    "ERROR: too much affection ❤️",
-    "access granted: forever yours"
+/* POPUP */
+function popup(t){
+  document.getElementById("text").innerText=t;
+  document.getElementById("popup").style.display="block";
+}
+function closePopup(){
+  document.getElementById("popup").style.display="none";
+}
+
+/* QUEST GAME */
+let step=0;
+function quest(){
+  const q=document.getElementById("quest");
+  const messages=[
+    "Step 1: You found me ❤️",
+    "Step 2: I was always yours",
+    "Step 3: Look closer at the page...",
+    "FINAL: You are my home."
   ];
-  let i=0;
-  const el=document.getElementById("hack");
-  el.innerText="";
-  const int=setInterval(()=>{
-    el.innerText+=lines[i]+"\n";
-    i++;
-    if(i>=lines.length)clearInterval(int);
-  },600);
+  q.innerText=messages[step];
+  step++;
+  if(step>=messages.length) step=0;
 }
 
-/* PATH */
-function path(v){
-  if(v==="travel")document.getElementById("path").innerText="we explore the world ✈️";
-  if(v==="home")document.getElementById("path").innerText="we build a home 🏡";
-  if(v==="future")document.getElementById("path").innerText="we grow old together ❤️";
+/* EASTER EGG */
+function easterEgg(){
+  popup("You found a hidden love signal 💓");
 }
 
-/* COUNTDOWNS */
-function startCountdowns(){
-
-  function next15th(){
-    const now=new Date();
-    let month=now.getMonth();
-    let year=now.getFullYear();
-
-    let target=new Date(year,month,15);
-    if(now>target) target=new Date(year,month+1,15);
-
-    return target;
+/* ADMIN MODE */
+function adminMode(){
+  const val=prompt("enter admin code:");
+  if(val==="foreverlove"){
+    popup("ADMIN MODE UNLOCKED: I love you beyond timelines ❤️");
+  } else {
+    popup("access denied.");
   }
-
-  function wedding(){
-    return new Date("2026-04-14");
-  }
-
-  setInterval(()=>{
-
-    const now=new Date();
-
-    let t1=next15th()-now;
-    let d1=Math.floor(t1/(1000*60*60*24));
-
-    document.getElementById("count1").innerText=
-      d1+" days until our monthly 15th ❤️";
-
-    let t2=wedding()-now;
-    let d2=Math.floor(t2/(1000*60*60*24));
-
-    document.getElementById("count2").innerText=
-      d2+" days until wedding anniversary 💍";
-
-  },1000);
 }
 
 </script>
