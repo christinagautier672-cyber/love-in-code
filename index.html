@@ -3,179 +3,181 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>LOVE OS: FINAL BOSS ❤️</title>
+<title>Love OS ❤️</title>
 
 <style>
 body {
-  margin:0;
-  font-family: Arial;
-  background:#050816;
-  color:white;
-  overflow-x:hidden;
-  animation: heartbeat 6s infinite;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: white;
+  overflow-x: hidden;
+  background: black;
 }
 
-/* HEARTBEAT */
-@keyframes heartbeat {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.01); }
-  100% { transform: scale(1); }
+/* 🌌 ANIMATED BACKGROUND */
+.bg {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(-45deg, #0f172a, #1e1b4b, #0b1023, #111827);
+  background-size: 400% 400%;
+  animation: moveBG 12s ease infinite;
+  z-index: -2;
 }
 
-/* GLITCH INTRO */
-#intro {
-  position:fixed;
-  inset:0;
-  background:black;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  font-family:monospace;
-  z-index:9999;
-}
-.glitch {
-  animation: glitch 0.3s infinite;
-}
-@keyframes glitch {
-  0%{transform:translate(0);}
-  25%{transform:translate(-2px,2px);}
-  50%{transform:translate(2px,-2px);}
-  75%{transform:translate(-1px,1px);}
-  100%{transform:translate(0);}
+@keyframes moveBG {
+  0% {background-position:0% 50%}
+  50% {background-position:100% 50%}
+  100% {background-position:0% 50%}
 }
 
-/* BACKGROUND */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at top left, rgba(236,72,153,0.25), transparent 40%),
-    radial-gradient(circle at bottom right, rgba(34,211,238,0.25), transparent 40%);
-  z-index:-1;
+/* subtle floating glow dots */
+.dot {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: rgba(236,72,153,0.6);
+  border-radius: 50%;
+  animation: float 10s linear infinite;
 }
 
-/* LAYOUT */
+@keyframes float {
+  from { transform: translateY(100vh); opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* 🎬 VIDEO INTRO */
+#introVideo {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 9999;
+}
+
+/* LOCK SCREEN */
+#lock {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9998;
+  backdrop-filter: blur(10px);
+}
+
+input {
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  margin-top: 10px;
+}
+
+/* 💎 MAIN LAYOUT */
 .container {
-  width:min(1000px,90%);
-  margin:auto;
-  padding:40px 0;
+  width: min(1000px, 90%);
+  margin: auto;
+  padding: 50px 0;
 }
 
-/* CARDS */
+/* ✨ COOL CARDS */
 .card {
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:18px;
-  padding:20px;
-  margin:15px 0;
-  transition:0.3s;
-  cursor:pointer;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 18px;
+  padding: 20px;
+  margin: 15px 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
 }
-.card:hover{
-  transform:scale(1.02);
-  box-shadow:0 0 20px rgba(236,72,153,0.3);
+
+/* shine effect */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: 0.5s;
+}
+
+.card:hover::before {
+  left: 100%;
+}
+
+.card:hover {
+  transform: scale(1.03) rotateX(3deg);
+  box-shadow: 0 0 25px rgba(236,72,153,0.4);
+}
+
+/* BUTTONS */
+button {
+  background: linear-gradient(90deg, #f472b6, #22d3ee);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 /* POPUP */
 .popup {
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  background:#0f172a;
-  border:2px solid #f472b6;
-  padding:20px;
-  border-radius:15px;
-  display:none;
-  z-index:1000;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #0f172a;
+  border: 2px solid #f472b6;
+  padding: 20px;
+  border-radius: 15px;
+  display: none;
+  z-index: 1000;
 }
 
-/* HEARTS */
-.heart {
-  position:fixed;
-  color:pink;
-  animation:float 6s linear forwards;
-}
-@keyframes float {
-  from{transform:translateY(100vh);opacity:1;}
-  to{transform:translateY(-10vh);opacity:0;}
-}
-
-/* SECRET ZONES */
-.secret-zone {
-  position:absolute;
-  opacity:0;
-  width:80px;
-  height:80px;
-}
-
-/* GALLERY */
-.gallery img {
-  width:100%;
-  border-radius:15px;
-  margin:10px 0;
-  cursor:pointer;
-  transition:0.3s;
-}
-.gallery img:hover {
-  transform:scale(1.03);
-}
-
-button{
-  background:linear-gradient(90deg,#f472b6,#22d3ee);
-  border:none;
-  padding:10px 15px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:bold;
-}
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
-<div id="intro">
-  <div class="glitch">BOOTING LOVE OS...</div>
-  <p>decrypting emotions...</p>
-  <p>loading memories...</p>
-</div>
+<div class="bg"></div>
 
-<!-- SECRET ADMIN MODE -->
-<input id="admin" style="opacity:0;position:fixed;top:0;" />
+<!-- 🎬 VIDEO INTRO (replace link if you want custom video later) -->
+<video id="introVideo" autoplay muted>
+  <source src="https://cdn.coverr.co/videos/coverr-love-in-the-air-4302/1080p.mp4" type="video/mp4">
+</video>
+
+<!-- 🔐 LOCK -->
+<div id="lock">
+  <h2>💖 LOVE SYSTEM LOCKED</h2>
+  <p>Hint: say it to unlock me</p>
+  <input id="pass" placeholder="password"/>
+  <button onclick="unlock()">Unlock</button>
+</div>
 
 <!-- MAIN -->
 <div id="site" style="display:none">
 
 <div class="container">
 
-<h1>LOVE OS: FINAL BOSS ❤️</h1>
+<h1>To My Favorite Human ❤️</h1>
 
-<p>Find the secrets. Click everything. Some things are hidden.</p>
-
-<!-- SECRET ZONES -->
-<div class="secret-zone" onclick="adminMode()" style="top:20%;left:10%"></div>
-<div class="secret-zone" onclick="easterEgg()" style="top:60%;left:70%"></div>
-
-<div class="card" onclick="popup('You are my forever system.')">
-💌 Memory Fragment 1
+<div class="card" onclick="popup('You are my safest place.')">
+💌 Click for a memory
 </div>
 
-<div class="card" onclick="popup('We were always meant to crash into each other.')">
-💖 Memory Fragment 2
+<div class="card" onclick="popup('I choose you in every timeline.')">
+💖 Another secret
 </div>
 
-<div class="card" onclick="quest()">
-🧩 Love Quest (click to begin)
-<p id="quest"></p>
-</div>
-
-<div class="card gallery">
-<h2>📸 Memories</h2>
-<img onclick="popup('Our happiest moment ❤️')" src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70"/>
-<img onclick="popup('Forever starts here 💍')" src="https://images.unsplash.com/photo-1523438097201-512ae7d59c2a"/>
+<div class="card" onclick="popup('You + Me = Forever system.')">
+💻 Love equation
 </div>
 
 </div>
@@ -189,61 +191,43 @@ button{
 
 <script>
 
-/* INTRO */
-setTimeout(()=>{
-  document.getElementById("intro").style.display="none";
-  document.getElementById("site").style.display="block";
-},2500);
+/* VIDEO → SITE TRANSITION */
+const vid = document.getElementById("introVideo");
+vid.onended = () => {
+  vid.style.display = "none";
+  document.getElementById("lock").style.display = "flex";
+};
 
-/* HEARTS */
-document.addEventListener("click",(e)=>{
-  const h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML="❤";
-  h.style.left=e.clientX+"px";
-  h.style.top=e.clientY+"px";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),6000);
-});
+/* PASSWORD */
+function unlock(){
+  const val = document.getElementById("pass").value.toLowerCase().trim();
+
+  if(val === "i love you"){
+    document.getElementById("lock").style.display = "none";
+    document.getElementById("site").style.display = "block";
+  } else {
+    alert("try again ❤️ (hint: 3 words)");
+  }
+}
 
 /* POPUP */
 function popup(t){
-  document.getElementById("text").innerText=t;
-  document.getElementById("popup").style.display="block";
+  document.getElementById("text").innerText = t;
+  document.getElementById("popup").style.display = "block";
 }
 function closePopup(){
-  document.getElementById("popup").style.display="none";
+  document.getElementById("popup").style.display = "none";
 }
 
-/* QUEST GAME */
-let step=0;
-function quest(){
-  const q=document.getElementById("quest");
-  const messages=[
-    "Step 1: You found me ❤️",
-    "Step 2: I was always yours",
-    "Step 3: Look closer at the page...",
-    "FINAL: You are my home."
-  ];
-  q.innerText=messages[step];
-  step++;
-  if(step>=messages.length) step=0;
-}
-
-/* EASTER EGG */
-function easterEgg(){
-  popup("You found a hidden love signal 💓");
-}
-
-/* ADMIN MODE */
-function adminMode(){
-  const val=prompt("enter admin code:");
-  if(val==="foreverlove"){
-    popup("ADMIN MODE UNLOCKED: I love you beyond timelines ❤️");
-  } else {
-    popup("access denied.");
-  }
-}
+/* FLOATING DOTS */
+setInterval(() => {
+  const d = document.createElement("div");
+  d.className = "dot";
+  d.style.left = Math.random()*100 + "vw";
+  d.style.animationDuration = (5 + Math.random()*5) + "s";
+  document.body.appendChild(d);
+  setTimeout(() => d.remove(), 10000);
+}, 300);
 
 </script>
 
