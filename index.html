@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +15,6 @@ body {
   overflow-x: hidden;
 }
 
-/* BACKGROUND */
 body::before {
   content: "";
   position: fixed;
@@ -25,7 +25,6 @@ body::before {
   z-index: -1;
 }
 
-/* FLOATING HEARTS */
 .heart {
   position: fixed;
   color: rgba(255,105,180,0.5);
@@ -38,7 +37,6 @@ body::before {
   to { transform: translateY(-10vh); opacity: 0; }
 }
 
-/* LAYOUT */
 .container {
   width: min(1000px, 90%);
   margin: auto;
@@ -54,11 +52,8 @@ body::before {
   transition: transform 0.3s ease;
 }
 
-.card:hover {
-  transform: scale(1.02);
-}
+.card:hover { transform: scale(1.02); }
 
-/* BUTTONS */
 button {
   background: linear-gradient(90deg, #f472b6, #22d3ee);
   border: none;
@@ -70,16 +65,11 @@ button {
   margin: 10px 5px;
   transition: 0.3s;
 }
+button:hover { transform: scale(1.1); }
 
-button:hover {
-  transform: scale(1.1);
-}
-
-/* POPUP */
-.popup {
+.popup, .lockscreen, .gameScreen {
   position: fixed;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   background: #0f172a;
   padding: 25px;
@@ -87,60 +77,88 @@ button:hover {
   border: 2px solid #f472b6;
   display: none;
   z-index: 1000;
-  width: 300px;
+  width: 320px;
   text-align: center;
 }
 
-.popup button {
-  margin-top: 15px;
+.secret { display:none; color:#22d3ee; margin-top:10px; }
+
+.fade { animation: fadeIn 1s ease-in; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(20px);} to{opacity:1;} }
+
+.glitch {
+  animation: glitch 0.3s infinite;
+}
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px,2px); }
+  40% { transform: translate(2px,-2px); }
+  60% { transform: translate(-1px,1px); }
+  80% { transform: translate(1px,-1px); }
+  100% { transform: translate(0); }
 }
 
-/* FADE IN */
-.fade {
-  animation: fadeIn 1.2s ease-in;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* SECRET BOX */
-.secret {
-  display: none;
-  margin-top: 10px;
-  color: #22d3ee;
-}
 </style>
 </head>
 
 <body>
 
-<div class="container fade">
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8f5b8a7.mp3?filename=romantic-112191.mp3" type="audio/mp3">
+</audio>
+
+<!-- PASSWORD SCREEN -->
+<div id="lock" class="lockscreen" style="display:block;">
+  <h2>Enter Password 💻</h2>
+  <p>Hint: What are we?</p>
+  <input id="pass" placeholder="type here" />
+  <br><br>
+  <button onclick="checkPass()">Unlock</button>
+</div>
+
+<!-- MAIN -->
+<div id="site" style="display:none;" class="fade">
+
+<div class="container">
 
   <h1>To My Favorite Human ❤️</h1>
-  <p>This is a website full of hidden love, just like my heart for you.</p>
+  <p>A website full of hidden love, memories, and little surprises.</p>
 
   <div class="card">
-    <h2>💌 Click for a surprise</h2>
-    <button onclick="openPopup('You are my favorite notification every day ❤️')">Open Message</button>
-    <button onclick="openPopup('I would choose you in every universe.')">Another One</button>
-    <button onclick="openPopup('You + Me = Always.')">Secret Love Formula</button>
+    <h2>💌 Pop-ups</h2>
+    <button onclick="popup('You are my forever notification ❤️')">Message 1</button>
+    <button onclick="popup('I choose you in every timeline.')">Message 2</button>
+    <button onclick="popup('You + Me = Always.')">Message 3</button>
   </div>
 
   <div class="card">
-    <h2>🧠 Tech Mode</h2>
-    <button onclick="typeEffect()">Run Love.exe</button>
-    <p id="terminal"></p>
+    <h2>🧠 Fake System Hack</h2>
+    <button onclick="hack()">Run Love Hack.exe</button>
+    <p id="hackText"></p>
+  </div>
+
+  <div class="card">
+    <h2>🎮 Choose Our Path</h2>
+    <button onclick="path('adventure')">Adventure Mode</button>
+    <button onclick="path('lazy')">Cuddle Mode</button>
+    <button onclick="path('future')">Future Mode</button>
+    <p id="pathText"></p>
   </div>
 
   <div class="card">
     <h2>🔒 Hidden Message</h2>
-    <button onclick="reveal()">Click to unlock</button>
-    <div id="secret" class="secret">
-      I still fall for you every single day like it’s the first time.
-    </div>
+    <button onclick="reveal()">Unlock</button>
+    <div id="secret" class="secret">I still fall for you every single day.</div>
   </div>
+
+  <div class="card">
+    <h2>🎵 Music</h2>
+    <button onclick="document.getElementById('music').play()">Play Love Music</button>
+    <button onclick="document.getElementById('music').pause()">Pause</button>
+  </div>
+
+</div>
 
 </div>
 
@@ -152,45 +170,61 @@ button:hover {
 
 <script>
 
-/* FLOATING HEARTS */
 setInterval(() => {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = "❤";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = (3 + Math.random() * 3) + "s";
-  document.body.appendChild(heart);
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = "❤";
+  h.style.left = Math.random()*100 + "vw";
+  h.style.animationDuration = (3+Math.random()*3)+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},400);
 
-  setTimeout(() => heart.remove(), 6000);
-}, 400);
-
-/* POPUP */
-function openPopup(text) {
-  document.getElementById("popupText").innerText = text;
-  document.getElementById("popup").style.display = "block";
+function popup(t){
+  document.getElementById("popupText").innerText=t;
+  document.getElementById("popup").style.display="block";
+}
+function closePopup(){
+  document.getElementById("popup").style.display="none";
 }
 
-function closePopup() {
-  document.getElementById("popup").style.display = "none";
+function reveal(){
+  document.getElementById("secret").style.display="block";
 }
 
-/* TYPE EFFECT */
-function typeEffect() {
-  const text = "> booting love.exe...\n> loading memories...\n> error: you are too perfect ❤️";
-  let i = 0;
-  const el = document.getElementById("terminal");
-  el.innerText = "";
+function checkPass(){
+  const val=document.getElementById("pass").value.toLowerCase();
+if (val === "foreveryours") {    document.getElementById("lock").style.display="none";
+    document.getElementById("site").style.display="block";
+  } else {
+    alert("Hint: think emotionally ❤️");
+  }
+}
 
-  const interval = setInterval(() => {
-    el.innerText += text[i];
+function hack(){
+  const t=document.getElementById("hackText");
+  let i=0;
+  const lines=[
+    "> scanning heart...",
+    "> bypassing logic...",
+    "> injecting love...",
+    "> ERROR: TOO MUCH BEAUTY DETECTED ❤️",
+    "> access granted: forever yours"
+  ];
+
+  t.innerText="";
+  const int=setInterval(()=>{
+    t.innerText+=lines[i]+"\n";
     i++;
-    if (i >= text.length) clearInterval(interval);
-  }, 50);
+    if(i>=lines.length)clearInterval(int);
+  },700);
 }
 
-/* SECRET REVEAL */
-function reveal() {
-  document.getElementById("secret").style.display = "block";
+function path(choice){
+  const t=document.getElementById("pathText");
+  if(choice==='adventure') t.innerText="We travel the world together ✈️";
+  if(choice==='lazy') t.innerText="We stay in bed and order food 🍜";
+  if(choice==='future') t.innerText="We grow old laughing together ❤️";
 }
 
 </script>
