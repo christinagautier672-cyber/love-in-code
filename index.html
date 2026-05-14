@@ -1,72 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>To My Favorite Human ❤️</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #020617;
-      color: #f8fafc;
-      line-height: 1.6;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(circle at top right, rgba(236,72,153,0.18), transparent 40%),
-        radial-gradient(circle at bottom left, rgba(34,211,238,0.18), transparent 40%);
-      pointer-events: none;
-      z-index: -1;
-    }
-    .container {
-      width: min(1100px, calc(100% - 2rem));
-      margin: 0 auto;
-    }
-    .card {
-      background: rgba(15, 23, 42, 0.88);
-      border: 1px solid rgba(236,72,153,0.15);
-      border-radius: 24px;
-      padding: 2rem;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
-      backdrop-filter: blur(10px);
-    }
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 2rem 0;
-    }
-    .terminal-bar {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 1.5rem;
-      font-family: monospace;
-      color: #94a3b8;
-    }
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;n
-    }
-    .dot.red { background: #f87171; }
-    .dot.yellow { background: #facc15; }
-    .dot.green { background: #4ade80; }
-    .terminal-text {
-      font-family: monospace;
-      color: #4ade80;
-      margin-bottom: 2rem;
-    }
-    h1 {
-      font-size: clamp(3rem, 8vw, 6rem);
-      line-height: 1.05;
-      margin: 0 0 1rem;
-    }
-    .gradient {
-      background: linear-gradient(90deg, #f472b6, #22d3ee);
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>To My Favorite Human ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #020617;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* BACKGROUND */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at top right, rgba(236,72,153,0.2), transparent 40%),
+    radial-gradient(circle at bottom left, rgba(34,211,238,0.2), transparent 40%);
+  z-index: -1;
+}
+
+/* FLOATING HEARTS */
+.heart {
+  position: fixed;
+  color: rgba(255,105,180,0.5);
+  font-size: 18px;
+  animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(100vh); opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* LAYOUT */
+.container {
+  width: min(1000px, 90%);
+  margin: auto;
+  padding: 40px 0;
+}
+
+.card {
+  background: rgba(15,23,42,0.85);
+  border-radius: 20px;
+  padding: 25px;
+  margin: 20px 0;
+  border: 1px solid rgba(255,105,180,0.2);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+/* BUTTONS */
+button {
+  background: linear-gradient(90deg, #f472b6, #22d3ee);
+  border: none;
+  padding: 12px 18px;
+  color: black;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  margin: 10px 5px;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+/* POPUP */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #0f172a;
+  padding: 25px;
+  border-radius: 20px;
+  border: 2px solid #f472b6;
+  display: none;
+  z-index: 1000;
+  width: 300px;
+  text-align: center;
+}
+
+.popup button {
+  margin-top: 15px;
+}
+
+/* FADE IN */
+.fade {
+  animation: fadeIn 1.2s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* SECRET BOX */
+.secret {
+  display: none;
+  margin-top: 10px;
+  color: #22d3ee;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container fade">
+
+  <h1>To My Favorite Human ❤️</h1>
+  <p>This is a website full of hidden love, just like my heart for you.</p>
+
+  <div class="card">
+    <h2>💌 Click for a surprise</h2>
+    <button onclick="openPopup('You are my favorite notification every day ❤️')">Open Message</button>
+    <button onclick="openPopup('I would choose you in every universe.')">Another One</button>
+    <button onclick="openPopup('You + Me = Always.')">Secret Love Formula</button>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Tech Mode</h2>
+    <button onclick="typeEffect()">Run Love.exe</button>
+    <p id="terminal"></p>
+  </div>
+
+  <div class="card">
+    <h2>🔒 Hidden Message</h2>
+    <button onclick="reveal()">Click to unlock</button>
+    <div id="secret" class="secret">
+      I still fall for you every single day like it’s the first time.
+    </div>
+  </div>
+
+</div>
+
+<!-- POPUP -->
+<div id="popup" class="popup">
+  <p id="popupText"></p>
+  <button onclick="closePopup()">Close</button>
+</div>
+
+<script>
+
+/* FLOATING HEARTS */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 6000);
+}, 400);
+
+/* POPUP */
+function openPopup(text) {
+  document.getElementById("popupText").innerText = text;
+  document.getElementById("popup").style.display = "block";
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+
+/* TYPE EFFECT */
+function typeEffect() {
+  const text = "> booting love.exe...\n> loading memories...\n> error: you are too perfect ❤️";
+  let i = 0;
+  const el = document.getElementById("terminal");
+  el.innerText = "";
+
+  const interval = setInterval(() => {
+    el.innerText += text[i];
+    i++;
+    if (i >= text.length) clearInterval(interval);
+  }, 50);
+}
+
+/* SECRET REVEAL */
+function reveal() {
+  document.getElementById("secret").style.display = "block";
+}
+
+</script>
+
+</body>
 </html>
