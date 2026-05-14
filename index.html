@@ -14,13 +14,13 @@ body {
   background: #050816;
 }
 
-/* 🌌 ANIMATED BACKGROUND */
+/* 🌌 SMOOTH ANIMATED BACKGROUND */
 .bg {
   position: fixed;
   inset: 0;
   background: linear-gradient(-45deg, #0f172a, #1e1b4b, #0b1023, #111827);
   background-size: 400% 400%;
-  animation: moveBG 12s ease infinite;
+  animation: moveBG 15s ease infinite;
   z-index: -1;
 }
 
@@ -30,14 +30,14 @@ body {
   100% {background-position:0% 50%}
 }
 
-/* floating dots */
+/* floating particles */
 .dot {
   position: fixed;
   width: 6px;
   height: 6px;
-  background: rgba(236,72,153,0.6);
+  background: rgba(236,72,153,0.5);
   border-radius: 50%;
-  animation: float 10s linear forwards;
+  animation: float 12s linear forwards;
 }
 
 @keyframes float {
@@ -45,27 +45,19 @@ body {
   to { transform: translateY(-10vh); opacity: 0; }
 }
 
-/* 🎬 VIDEO INTRO */
-#introVideo {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 9999;
-}
-
 /* 🔐 LOCK SCREEN */
 #lock {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.85);
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 9998;
+  z-index: 9999;
   backdrop-filter: blur(10px);
+  text-align: center;
+  padding: 20px;
 }
 
 input {
@@ -73,7 +65,8 @@ input {
   border-radius: 10px;
   border: none;
   margin-top: 10px;
-  width: 200px;
+  width: 220px;
+  text-align: center;
 }
 
 /* MAIN */
@@ -83,21 +76,39 @@ input {
   padding: 50px 0;
 }
 
-/* ✨ CARDS */
+/* ✨ CARDS (much smoother + modern) */
 .card {
   background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.12);
   border-radius: 18px;
   padding: 20px;
   margin: 15px 0;
   cursor: pointer;
-  transition: 0.3s;
-  backdrop-filter: blur(10px);
+  transition: all 0.25s ease;
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
 }
 
 .card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 25px rgba(236,72,153,0.4);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 0 30px rgba(236,72,153,0.35);
+}
+
+/* subtle shine */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.15), transparent);
+  transition: 0.5s;
+}
+
+.card:hover::before {
+  left: 120%;
 }
 
 /* BUTTON */
@@ -108,6 +119,11 @@ button {
   border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
 }
 
 /* POPUP */
@@ -122,8 +138,14 @@ button {
   border-radius: 15px;
   display: none;
   z-index: 10000;
+  width: 280px;
+  text-align: center;
 }
 
+/* smoother text */
+h1 {
+  text-align: center;
+}
 </style>
 </head>
 
@@ -131,15 +153,10 @@ button {
 
 <div class="bg"></div>
 
-<!-- 🎬 VIDEO INTRO -->
-<video id="introVideo" autoplay muted playsinline>
-  <source src="https://cdn.coverr.co/videos/coverr-love-in-the-air-4302/1080p.mp4" type="video/mp4">
-</video>
-
-<!-- 🔐 LOCK -->
+<!-- 🔐 LOCK SCREEN -->
 <div id="lock">
   <h2>💖 LOVE SYSTEM LOCKED</h2>
-  <p>Hint: say it to unlock me</p>
+  <p>Hint: say the words that started it all</p>
   <input id="pass" placeholder="password"/>
   <button onclick="unlock()">Unlock</button>
 </div>
@@ -152,15 +169,15 @@ button {
 <h1>To My Favorite Human ❤️</h1>
 
 <div class="card" onclick="popup('You are my safest place.')">
-💌 Click for a memory
+💌 Memory: You + Me
 </div>
 
-<div class="card" onclick="popup('I choose you in every timeline.')">
-💖 Another secret
+<div class="card" onclick="popup('I would choose you in every timeline.')">
+💖 Memory: Always You
 </div>
 
-<div class="card" onclick="popup('You + Me = Forever system.')">
-💻 Love equation
+<div class="card" onclick="popup('You are my home, no matter where we are.')">
+🏡 Memory: Home
 </div>
 
 </div>
@@ -174,23 +191,7 @@ button {
 
 <script>
 
-const vid = document.getElementById("introVideo");
-
-/* SAFETY: if video fails, still unlock site */
-setTimeout(() => {
-  showLock();
-}, 4000);
-
-vid.onended = () => {
-  showLock();
-};
-
-function showLock(){
-  vid.style.display = "none";
-  document.getElementById("lock").style.display = "flex";
-}
-
-/* PASSWORD */
+/* LOCK */
 function unlock(){
   const val = document.getElementById("pass").value.toLowerCase().trim();
 
@@ -211,15 +212,15 @@ function closePopup(){
   document.getElementById("popup").style.display = "none";
 }
 
-/* FLOATING DOTS */
+/* FLOATING DOTS (SMOOTHER) */
 setInterval(() => {
   const d = document.createElement("div");
   d.className = "dot";
-  d.style.left = Math.random()*100 + "vw";
-  d.style.animationDuration = (5 + Math.random()*5) + "s";
+  d.style.left = Math.random() * 100 + "vw";
+  d.style.animationDuration = (8 + Math.random() * 5) + "s";
   document.body.appendChild(d);
-  setTimeout(() => d.remove(), 10000);
-}, 300);
+  setTimeout(() => d.remove(), 12000);
+}, 400);
 
 </script>
 
