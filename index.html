@@ -3,98 +3,119 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>To My Favorite Human ❤️</title>
+<title>Love OS v3.0 ❤️</title>
 
 <style>
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #020617;
-  color: white;
-  overflow-x: hidden;
+  margin:0;
+  font-family: Arial;
+  background:#050816;
+  color:white;
+  overflow-x:hidden;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(circle at top right, rgba(236,72,153,0.2), transparent 40%),
-    radial-gradient(circle at bottom left, rgba(34,211,238,0.2), transparent 40%);
-  z-index: -1;
-}
-
-.heart {
-  position: fixed;
-  color: rgba(255,105,180,0.5);
-  font-size: 18px;
-  animation: floatUp 6s linear infinite;
-}
-
-@keyframes floatUp {
-  from { transform: translateY(100vh); opacity: 1; }
-  to { transform: translateY(-10vh); opacity: 0; }
-}
-
-.container {
-  width: min(1000px, 90%);
-  margin: auto;
-  padding: 40px 0;
-}
-
-.card {
-  background: rgba(15,23,42,0.85);
-  border-radius: 20px;
-  padding: 25px;
-  margin: 20px 0;
-  border: 1px solid rgba(255,105,180,0.2);
-  transition: transform 0.3s ease;
-}
-
-.card:hover { transform: scale(1.02); }
-
-button {
-  background: linear-gradient(90deg, #f472b6, #22d3ee);
-  border: none;
-  padding: 12px 18px;
-  color: black;
-  font-weight: bold;
-  border-radius: 12px;
-  cursor: pointer;
-  margin: 10px 5px;
-  transition: 0.3s;
-}
-button:hover { transform: scale(1.1); }
-
-.popup, .lockscreen, .gameScreen {
-  position: fixed;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  background: #0f172a;
-  padding: 25px;
-  border-radius: 20px;
-  border: 2px solid #f472b6;
-  display: none;
-  z-index: 1000;
-  width: 320px;
-  text-align: center;
-}
-
-.secret { display:none; color:#22d3ee; margin-top:10px; }
-
-.fade { animation: fadeIn 1s ease-in; }
-@keyframes fadeIn { from{opacity:0;transform:translateY(20px);} to{opacity:1;} }
-
+/* GLITCH */
 .glitch {
-  animation: glitch 0.3s infinite;
+  animation: glitch 0.4s infinite;
 }
 @keyframes glitch {
   0% { transform: translate(0); }
-  20% { transform: translate(-2px,2px); }
-  40% { transform: translate(2px,-2px); }
-  60% { transform: translate(-1px,1px); }
-  80% { transform: translate(1px,-1px); }
+  25% { transform: translate(-2px,2px); }
+  50% { transform: translate(2px,-2px); }
+  75% { transform: translate(-1px,1px); }
   100% { transform: translate(0); }
+}
+
+/* BACKGROUND */
+body::before {
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at top left, rgba(236,72,153,0.25), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(34,211,238,0.25), transparent 40%);
+  z-index:-1;
+}
+
+/* CONTAINER */
+.container {
+  width:min(1000px,90%);
+  margin:auto;
+  padding:40px 0;
+}
+
+/* CARDS */
+.card {
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:18px;
+  padding:20px;
+  margin:15px 0;
+  transition:0.3s;
+  cursor:pointer;
+}
+.card:hover {
+  transform:scale(1.02);
+  box-shadow:0 0 20px rgba(236,72,153,0.3);
+}
+
+/* BUTTON */
+button {
+  background:linear-gradient(90deg,#f472b6,#22d3ee);
+  border:none;
+  padding:10px 15px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+/* POPUP */
+.popup {
+  position:fixed;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  background:#0f172a;
+  border:2px solid #f472b6;
+  padding:20px;
+  border-radius:15px;
+  display:none;
+  z-index:1000;
+}
+
+/* HEARTS */
+.heart {
+  position:fixed;
+  color:pink;
+  animation: float 6s linear forwards;
+}
+@keyframes float {
+  from { transform:translateY(100vh); opacity:1; }
+  to { transform:translateY(-10vh); opacity:0; }
+}
+
+/* SCREEN SHAKE */
+.shake {
+  animation: shake 0.3s;
+}
+@keyframes shake {
+  0%{transform:translate(0);}
+  25%{transform:translate(-5px,5px);}
+  50%{transform:translate(5px,-5px);}
+  75%{transform:translate(-5px,5px);}
+  100%{transform:translate(0);}
+}
+
+/* LOCK SCREEN */
+#lock {
+  position:fixed;
+  inset:0;
+  background:black;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  font-family:monospace;
 }
 
 </style>
@@ -104,127 +125,166 @@ button:hover { transform: scale(1.1); }
 
 <!-- MUSIC -->
 <audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8f5b8a7.mp3?filename=romantic-112191.mp3" type="audio/mp3">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8f5b8a7.mp3" type="audio/mp3">
 </audio>
 
-<!-- PASSWORD SCREEN -->
-<div id="lock" class="lockscreen" style="display:block;">
-  <h2>Enter Password 💻</h2>
-  <p>Hint: What are we?</p>
-  <input id="pass" placeholder="type here" />
+<!-- LOCK -->
+<div id="lock">
+  <h2 class="glitch">LOVE SYSTEM LOCKED</h2>
+  <p>Hint: our forever word ❤️</p>
+  <input id="pass" placeholder="password"/>
   <br><br>
-  <button onclick="checkPass()">Unlock</button>
+  <button onclick="unlock()">ENTER</button>
 </div>
 
 <!-- MAIN -->
-<div id="site" style="display:none;" class="fade">
+<div id="site" style="display:none">
 
 <div class="container">
 
-  <h1>To My Favorite Human ❤️</h1>
-  <p>A website full of hidden love, memories, and little surprises.</p>
+<h1>To My Favorite Human ❤️</h1>
 
-  <div class="card">
-    <h2>💌 Pop-ups</h2>
-    <button onclick="popup('You are my forever notification ❤️')">Message 1</button>
-    <button onclick="popup('I choose you in every timeline.')">Message 2</button>
-    <button onclick="popup('You + Me = Always.')">Message 3</button>
-  </div>
+<div class="card" onclick="popup('You are my home.')">
+💌 Click me
+</div>
 
-  <div class="card">
-    <h2>🧠 Fake System Hack</h2>
-    <button onclick="hack()">Run Love Hack.exe</button>
-    <p id="hackText"></p>
-  </div>
+<div class="card" onclick="popup('I would choose you every timeline.')">
+💖 Another secret
+</div>
 
-  <div class="card">
-    <h2>🎮 Choose Our Path</h2>
-    <button onclick="path('adventure')">Adventure Mode</button>
-    <button onclick="path('lazy')">Cuddle Mode</button>
-    <button onclick="path('future')">Future Mode</button>
-    <p id="pathText"></p>
-  </div>
+<div class="card">
+<h2>🎉 Anniversary Countdown (Dating - 15th)</h2>
+<p id="count1"></p>
+</div>
 
-  <div class="card">
-    <h2>🔒 Hidden Message</h2>
-    <button onclick="reveal()">Unlock</button>
-    <div id="secret" class="secret">I still fall for you every single day.</div>
-  </div>
+<div class="card">
+<h2>💍 Wedding Anniversary Countdown (April)</h2>
+<p id="count2"></p>
+</div>
 
-  <div class="card">
-    <h2>🎵 Music</h2>
-    <button onclick="document.getElementById('music').play()">Play Love Music</button>
-    <button onclick="document.getElementById('music').pause()">Pause</button>
-  </div>
+<div class="card">
+<h2>💻 Fake Hack</h2>
+<button onclick="hack()">Run love.exe</button>
+<p id="hack"></p>
+</div>
+
+<div class="card">
+<h2>🎮 Choose Path</h2>
+<button onclick="path('travel')">Travel</button>
+<button onclick="path('home')">Home</button>
+<button onclick="path('future')">Future</button>
+<p id="path"></p>
+</div>
 
 </div>
 
 </div>
 
 <!-- POPUP -->
-<div id="popup" class="popup">
-  <p id="popupText"></p>
-  <button onclick="closePopup()">Close</button>
+<div class="popup" id="popup">
+<p id="text"></p>
+<button onclick="closePopup()">Close</button>
 </div>
 
 <script>
 
-setInterval(() => {
-  const h = document.createElement("div");
-  h.className = "heart";
-  h.innerHTML = "❤";
-  h.style.left = Math.random()*100 + "vw";
-  h.style.animationDuration = (3+Math.random()*3)+"s";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),6000);
-},400);
+/* UNLOCK */
+function unlock(){
+  const val=document.getElementById("pass").value.toLowerCase();
 
+  if(val==="forever" || val==="love"){
+    document.getElementById("lock").style.display="none";
+    document.getElementById("site").style.display="block";
+    document.getElementById("music").play();
+    startCountdowns();
+  } else {
+    document.body.classList.add("shake");
+    setTimeout(()=>document.body.classList.remove("shake"),300);
+    alert("wrong password ❤️ hint: forever word");
+  }
+}
+
+/* POPUP */
 function popup(t){
-  document.getElementById("popupText").innerText=t;
+  document.getElementById("text").innerText=t;
   document.getElementById("popup").style.display="block";
 }
 function closePopup(){
   document.getElementById("popup").style.display="none";
 }
 
-function reveal(){
-  document.getElementById("secret").style.display="block";
-}
+/* HEARTS */
+document.addEventListener("click",(e)=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤";
+  h.style.left=e.clientX+"px";
+  h.style.top=e.clientY+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+});
 
-function checkPass(){
-  const val=document.getElementById("pass").value.toLowerCase();
-if (val === "foreveryours") 
-{  document.getElementById("lock").style.display="none";
-    document.getElementById("site").style.display="block";
-  } else {
-    alert("Hint: think emotionally ❤️");
-  }
-}
-
+/* FAKE HACK */
 function hack(){
-  const t=document.getElementById("hackText");
-  let i=0;
   const lines=[
-    "> scanning heart...",
-    "> bypassing logic...",
-    "> injecting love...",
-    "> ERROR: TOO MUCH BEAUTY DETECTED ❤️",
-    "> access granted: forever yours"
+    "scanning heart...",
+    "bypassing logic...",
+    "injecting love...",
+    "ERROR: too much affection ❤️",
+    "access granted: forever yours"
   ];
-
-  t.innerText="";
+  let i=0;
+  const el=document.getElementById("hack");
+  el.innerText="";
   const int=setInterval(()=>{
-    t.innerText+=lines[i]+"\n";
+    el.innerText+=lines[i]+"\n";
     i++;
     if(i>=lines.length)clearInterval(int);
-  },700);
+  },600);
 }
 
-function path(choice){
-  const t=document.getElementById("pathText");
-  if(choice==='adventure') t.innerText="We travel the world together ✈️";
-  if(choice==='lazy') t.innerText="We stay in bed and order food 🍜";
-  if(choice==='future') t.innerText="We grow old laughing together ❤️";
+/* PATH */
+function path(v){
+  if(v==="travel")document.getElementById("path").innerText="we explore the world ✈️";
+  if(v==="home")document.getElementById("path").innerText="we build a home 🏡";
+  if(v==="future")document.getElementById("path").innerText="we grow old together ❤️";
+}
+
+/* COUNTDOWNS */
+function startCountdowns(){
+
+  function next15th(){
+    const now=new Date();
+    let month=now.getMonth();
+    let year=now.getFullYear();
+
+    let target=new Date(year,month,15);
+    if(now>target) target=new Date(year,month+1,15);
+
+    return target;
+  }
+
+  function wedding(){
+    return new Date("2026-04-14");
+  }
+
+  setInterval(()=>{
+
+    const now=new Date();
+
+    let t1=next15th()-now;
+    let d1=Math.floor(t1/(1000*60*60*24));
+
+    document.getElementById("count1").innerText=
+      d1+" days until our monthly 15th ❤️";
+
+    let t2=wedding()-now;
+    let d2=Math.floor(t2/(1000*60*60*24));
+
+    document.getElementById("count2").innerText=
+      d2+" days until wedding anniversary 💍";
+
+  },1000);
 }
 
 </script>
